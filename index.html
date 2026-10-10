@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roblox AI Bot</title>
+
+    <title>Roblox AI</title>
 
     <style>
         * {
@@ -14,21 +15,37 @@
 
         body {
             background: #080b10;
-            color: white;
+            color: #ffffff;
             font-family: Arial, sans-serif;
-            min-height: 100vh;
-            padding: 20px;
+            padding: 18px;
+        }
+
+        button, input, select {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            padding: 12px;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        button:active {
+            transform: scale(0.98);
         }
 
         .container {
-            max-width: 900px;
+            max-width: 950px;
             margin: auto;
         }
 
         header {
-            padding: 25px 0;
-            border-bottom: 1px solid #202832;
-            margin-bottom: 25px;
+            padding: 20px 0;
+            border-bottom: 1px solid #25303c;
+            margin-bottom: 22px;
         }
 
         .logo {
@@ -42,20 +59,20 @@
         }
 
         .subtitle {
-            color: #8994a5;
             margin-top: 8px;
+            color: #8b98a9;
             font-size: 13px;
         }
 
         .panel {
             background: #111720;
-            border: 1px solid #27313d;
-            border-radius: 14px;
-            padding: 20px;
-            margin-bottom: 20px;
+            border: 1px solid #273441;
+            border-radius: 13px;
+            padding: 18px;
+            margin-bottom: 18px;
         }
 
-        .panel-title {
+        .section-title {
             font-size: 17px;
             margin-bottom: 15px;
         }
@@ -63,50 +80,39 @@
         .status-row {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 9px;
             margin-bottom: 12px;
         }
 
-        .status-dot {
-            width: 11px;
-            height: 11px;
-            border-radius: 50%;
+        .dot {
+            width: 10px;
+            height: 10px;
             background: #ff6464;
+            border-radius: 50%;
         }
 
-        #statusText {
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
-
-        .description {
-            color: #8994a5;
-            font-size: 13px;
-            line-height: 1.5;
-            margin-bottom: 18px;
-        }
-
-        button, select, input {
-            font: inherit;
-        }
-
-        button {
-            border: none;
-            cursor: pointer;
-            border-radius: 8px;
-            padding: 12px 15px;
-            font-weight: bold;
-            transition: 0.2s;
-        }
-
-        button:hover {
-            filter: brightness(1.1);
+        .muted {
+            color: #8b98a9;
+            font-size: 12px;
+            line-height: 1.6;
         }
 
         .main-button {
             width: 100%;
             background: #4cff88;
             color: #07130b;
+            margin-top: 15px;
+        }
+
+        .danger-button {
+            background: #ff6464;
+            color: #250707;
+        }
+
+        .secondary-button {
+            background: #243140;
+            color: white;
+            border: 1px solid #344657;
         }
 
         .grid {
@@ -116,112 +122,192 @@
         }
 
         .feature {
-            background: #111720;
-            border: 1px solid #27313d;
-            border-radius: 12px;
-            padding: 16px;
             min-width: 0;
+            background: #111720;
+            border: 1px solid #273441;
+            border-radius: 12px;
+            padding: 15px;
         }
 
         .feature h3 {
-            font-size: 15px;
+            font-size: 14px;
             margin-bottom: 8px;
         }
 
         .feature p {
-            color: #8994a5;
+            color: #8b98a9;
             font-size: 12px;
             line-height: 1.5;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
         }
 
-        .feature-status {
+        .badge {
             display: inline-block;
-            color: #ffcf70;
-            background: #302719;
-            padding: 5px 8px;
+            padding: 5px 7px;
             border-radius: 5px;
             font-size: 10px;
             font-weight: bold;
+            color: #ffcf70;
+            background: #302719;
             margin-bottom: 12px;
         }
 
         .feature button {
             width: 100%;
-            background: #202b38;
+            background: #243140;
+            border: 1px solid #344657;
             color: white;
-            border: 1px solid #344354;
-            font-size: 12px;
-        }
-
-        .feature button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
+            font-size: 11px;
         }
 
         .settings-row {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            gap: 12px;
+            align-items: center;
             flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 15px;
         }
 
-        select {
-            background: #202b38;
+        select, input {
+            width: 100%;
+            background: #080b10;
+            border: 1px solid #344657;
+            border-radius: 7px;
             color: white;
-            border: 1px solid #344354;
-            padding: 10px;
-            border-radius: 8px;
+            padding: 11px;
+            outline: none;
+        }
+
+        .settings-row select {
+            width: auto;
             max-width: 100%;
+        }
+
+        .toggle-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid #25303c;
+        }
+
+        .toggle-row:last-child {
+            border-bottom: none;
+        }
+
+        .toggle-row strong {
+            font-size: 13px;
+        }
+
+        .toggle-row p {
+            color: #8b98a9;
+            font-size: 11px;
+            margin-top: 5px;
+        }
+
+        .switch {
+            width: 44px;
+            height: 25px;
+            flex-shrink: 0;
+            appearance: none;
+            background: #364150;
+            border-radius: 20px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .switch::after {
+            content: "";
+            width: 19px;
+            height: 19px;
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            border-radius: 50%;
+            background: white;
+            transition: 0.2s;
+        }
+
+        .switch:checked {
+            background: #4cff88;
+        }
+
+        .switch:checked::after {
+            left: 22px;
+            background: #07130b;
+        }
+
+        .chat-box {
+            height: 220px;
+            overflow-y: auto;
+            background: #080b10;
+            border: 1px solid #273441;
+            border-radius: 9px;
+            padding: 12px;
+            margin-bottom: 12px;
+        }
+
+        .message {
+            margin-bottom: 12px;
+            line-height: 1.5;
+            font-size: 13px;
+            overflow-wrap: anywhere;
+        }
+
+        .message strong {
+            color: #4cff88;
+        }
+
+        .user-message strong {
+            color: #78b7ff;
+        }
+
+        .chat-input-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .chat-input-row input {
+            min-width: 0;
+        }
+
+        .send-button {
+            background: #4cff88;
+            color: #07130b;
+            padding: 0 18px;
         }
 
         .log {
             height: 150px;
             overflow-y: auto;
+            overflow-wrap: anywhere;
             background: #080b10;
-            border: 1px solid #27313d;
+            border: 1px solid #273441;
             border-radius: 8px;
             padding: 12px;
+            font: 12px/1.8 monospace;
             color: #aeb8c6;
-            font-family: monospace;
-            font-size: 12px;
-            line-height: 1.8;
-            overflow-wrap: anywhere;
-        }
-
-        .clear-button {
-            background: #202b38;
-            color: white;
-            font-size: 12px;
-            margin-top: 12px;
         }
 
         .notice {
-            color: #8994a5;
+            color: #8995a5;
             font-size: 11px;
             line-height: 1.6;
-            margin-top: 15px;
+            margin-top: 12px;
         }
 
         footer {
             text-align: center;
-            padding: 20px 0;
             color: #596575;
             font-size: 11px;
+            padding: 20px 0;
         }
 
         @media (max-width: 480px) {
             body {
-                padding: 14px;
-            }
-
-            .logo {
-                font-size: 24px;
-            }
-
-            .panel {
-                padding: 16px;
+                padding: 12px;
             }
 
             .grid {
@@ -229,146 +315,194 @@
             }
 
             .feature {
-                padding: 12px;
+                padding: 11px;
             }
 
             .feature h3 {
-                font-size: 13px;
+                font-size: 12px;
             }
 
-            .feature p {
-                font-size: 11px;
+            .panel {
+                padding: 14px;
             }
 
-            button {
-                padding: 11px 9px;
+            .logo {
+                font-size: 24px;
             }
         }
     </style>
 </head>
 
 <body>
-    <main class="container">
+<main class="container">
 
-        <header>
-            <div class="logo">ROBLOX <span>AI</span></div>
-            <p class="subtitle">Your AI gaming companion dashboard</p>
-        </header>
+    <header>
+        <div class="logo">ROBLOX <span>AI</span></div>
+        <p class="subtitle">AUTONOMOUS GAMING COMPANION</p>
+    </header>
 
-        <section class="panel">
-            <h2 class="panel-title">Assistant Control</h2>
+    <!-- MAIN CONTROL -->
+    <section class="panel">
+        <h2 class="section-title">AI Control Center</h2>
 
-            <div class="status-row">
-                <div class="status-dot" id="statusDot"></div>
-                <span id="statusText">OFFLINE</span>
+        <div class="status-row">
+            <span class="dot" id="statusDot"></span>
+            <strong id="statusText">OFFLINE</strong>
+        </div>
+
+        <p class="muted" id="statusDescription">
+            Your AI assistant is stopped.
+        </p>
+
+        <button class="main-button" id="toggleButton">
+            ▶ TURN AI ON
+        </button>
+
+        <p class="notice">
+            Activating the dashboard does not automatically connect a
+            Roblox account or enable autonomous gameplay.
+        </p>
+    </section>
+
+    <!-- FEATURES -->
+    <h2 class="section-title">Systems</h2>
+
+    <section class="grid">
+
+        <article class="feature">
+            <h3>👤 Roblox Account</h3>
+            <p>Check account integration status.</p>
+            <span class="badge" id="accountStatus">NOT CONNECTED</span>
+            <button id="accountButton">ACCOUNT SETTINGS</button>
+        </article>
+
+        <article class="feature">
+            <h3>🧠 AI Brain</h3>
+            <p>Generate decisions and conversation ideas.</p>
+            <span class="badge" id="aiStatus">CHECKING</span>
+            <button id="aiButton">CHECK AI CONNECTION</button>
+        </article>
+
+        <article class="feature">
+            <h3>🎮 Game Finder</h3>
+            <p>Search for Roblox experiences to explore.</p>
+            <span class="badge" id="gameStatus">READY TO SEARCH</span>
+            <button id="gameButton">FIND GAMES</button>
+        </article>
+
+        <article class="feature">
+            <h3>🔄 Game Hopping</h3>
+            <p>Configure whether the companion should look for another game.</p>
+            <span class="badge" id="hopStatus">DISABLED</span>
+            <button id="hopButton">TOGGLE GAME HOPPING</button>
+        </article>
+
+    </section>
+
+    <!-- AUTONOMOUS SETTINGS -->
+    <section class="panel" style="margin-top:18px">
+        <h2 class="section-title">Autonomous Settings</h2>
+
+        <div class="toggle-row">
+            <div>
+                <strong>Autonomous Mode</strong>
+                <p>Allow the AI to generate its own next-step decisions.</p>
             </div>
+            <input class="switch" type="checkbox" id="autonomousToggle">
+        </div>
 
-            <p class="description" id="statusDescription">
-                Your assistant is currently stopped.
-            </p>
-
-            <button class="main-button" id="toggleButton">
-                ▶ TURN ASSISTANT ON
-            </button>
-
-            <p class="notice">
-                Turning this on activates the dashboard interface.
-                The AI services still need a backend connection.
-            </p>
-        </section>
-
-        <h2 class="panel-title">Features</h2>
-
-        <section class="grid">
-
-            <article class="feature">
-                <h3>👤 Accounts</h3>
-                <p>Set up a supported account connection.</p>
-                <span class="feature-status">NOT CONNECTED</span>
-                <button id="accountButton">ACCOUNT SETTINGS</button>
-            </article>
-
-            <article class="feature">
-                <h3>🧠 AI Brain</h3>
-                <p>Configure the AI that powers your companion.</p>
-                <span class="feature-status">NOT CONNECTED</span>
-                <button id="aiButton">AI SETTINGS</button>
-            </article>
-
-            <article class="feature">
-                <h3>🎮 Game Finder</h3>
-                <p>Plan game searches and find Roblox experiences.</p>
-                <span class="feature-status">NOT CONNECTED</span>
-                <button id="gameButton">FIND GAMES</button>
-            </article>
-
-            <article class="feature">
-                <h3>💬 Chat Assistant</h3>
-                <p>Prepare messages and AI-generated replies.</p>
-                <span class="feature-status">NOT CONNECTED</span>
-                <button id="chatButton">OPEN CHAT</button>
-            </article>
-
-        </section>
-
-        <section class="panel" style="margin-top: 20px;">
-            <h2 class="panel-title">AI Personality</h2>
-
-            <div class="settings-row">
-                <span>Choose personality</span>
-
-                <select id="personalitySelect">
-                    <option value="Friendly">Friendly</option>
-                    <option value="Funny">Funny</option>
-                    <option value="Troll">Harmless Troll</option>
-                    <option value="Competitive">Competitive</option>
-                    <option value="Quiet">Quiet</option>
-                </select>
+        <div class="toggle-row">
+            <div>
+                <strong>Automatic Talking</strong>
+                <p>Let the AI start conversations on the website.</p>
             </div>
-        </section>
+            <input class="switch" type="checkbox" id="autoTalkToggle">
+        </div>
 
-        <section class="panel">
-            <h2 class="panel-title">Activity Log</h2>
+        <div class="toggle-row">
+            <div>
+                <strong>Game Discovery</strong>
+                <p>Allow the AI to request game-search results.</p>
+            </div>
+            <input class="switch" type="checkbox" id="gameDiscoveryToggle">
+        </div>
 
-            <div class="log" id="activityLog" aria-live="polite"></div>
+        <div class="settings-row" style="margin-top:18px">
+            <label for="personalitySelect">AI Personality</label>
+            <select id="personalitySelect">
+                <option value="Friendly">Friendly</option>
+                <option value="Funny">Funny</option>
+                <option value="Troll">Harmless Troll</option>
+                <option value="Competitive">Competitive</option>
+                <option value="Quiet">Quiet</option>
+            </select>
+        </div>
 
-            <button class="clear-button" id="clearLog">
-                CLEAR LOG
-            </button>
-        </section>
+        <p class="notice">
+            These switches configure website behavior. They do not
+            independently control a Roblox character.
+        </p>
+    </section>
 
-        <footer>
-            ROBLOX AI DASHBOARD · DEVELOPMENT BUILD
-        </footer>
+    <!-- GAME SEARCH -->
+    <section class="panel">
+        <h2 class="section-title">Game Finder</h2>
 
-    </main>
+        <p class="muted">
+            Search for a Roblox experience by name.
+        </p>
 
-    <script src="script.js"></script>
+        <div class="chat-input-row" style="margin-top:12px">
+            <input
+                type="text"
+                id="gameSearchInput"
+                placeholder="Search Roblox games..."
+                maxlength="100"
+            >
+            <button class="send-button" id="searchButton">SEARCH</button>
+        </div>
 
-    <script>
-        // Connect the dashboard's feature buttons.
-        document.getElementById("accountButton").addEventListener("click", function () {
-            window.RobloxAIBot.connectAccount();
-        });
+        <div id="gameResults" style="margin-top:14px"></div>
+    </section>
 
-        document.getElementById("personalitySelect").addEventListener("change", function () {
-            window.RobloxAIBot.setPersonality(this.value);
-        });
+    <!-- AI CHAT -->
+    <section class="panel">
+        <h2 class="section-title">AI Chat</h2>
 
-        document.getElementById("aiButton").addEventListener("click", function () {
-            alert("AI Brain setup will be added next.");
-            window.RobloxAIBot.log("AI Brain settings opened.");
-        });
+        <div class="chat-box" id="chatBox" aria-live="polite">
+            <div class="message">
+                <strong>Roblox AI:</strong>
+                Hey! I'm ready to get started. Once the AI backend is
+                connected, we can chat for real.
+            </div>
+        </div>
 
-        document.getElementById("gameButton").addEventListener("click", function () {
-            alert("Game Finder will be connected next.");
-            window.RobloxAIBot.log("Game Finder requested.");
-        });
+        <div class="chat-input-row">
+            <input
+                type="text"
+                id="chatInput"
+                placeholder="Talk to your AI..."
+                maxlength="2000"
+            >
+            <button class="send-button" id="sendButton">SEND</button>
+        </div>
+    </section>
 
-        document.getElementById("chatButton").addEventListener("click", function () {
-            alert("Chat Assistant will be added next.");
-            window.RobloxAIBot.log("Chat Assistant requested.");
-        });
-    </script>
+    <!-- ACTIVITY -->
+    <section class="panel">
+        <h2 class="section-title">Activity Log</h2>
+
+        <div class="log" id="activityLog" aria-live="polite"></div>
+
+        <button class="secondary-button" id="clearLog" style="margin-top:12px">
+            CLEAR LOG
+        </button>
+    </section>
+
+    <footer>ROBLOX AI · DEVELOPMENT BUILD</footer>
+
+</main>
+
+<script src="script.js"></script>
 </body>
 </html>
