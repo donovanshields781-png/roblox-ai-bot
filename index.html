@@ -1,1 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roblox AI Bot</title>
 
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #080b10;
+            color: white;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        header {
+            padding: 25px 0;
+            border-bottom: 1px solid #202832;
+            margin-bottom: 25px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            color: #4cff88;
+        }
+
+        .subtitle {
+            color: #8994a5;
+            margin-top: 8px;
+            font-size: 13px;
+        }
+
+        .panel {
+            background: #111720;
+            border: 1px solid #27313d;
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .panel-title {
+            font-size: 17px;
+            margin-bottom: 15px;
+        }
+
+        .status-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .status-dot {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background: #ff6464;
+        }
+
+        #statusText {
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .description {
+            color: #8994a5;
+            font-size: 13px;
+            line-height: 1.5;
+            margin-bottom: 18px;
+        }
+
+        button, select, input {
+            font: inherit;
+        }
+
+        button {
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+            padding: 12px 15px;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            filter: brightness(1.1);
+        }
+
+        .main-button {
+            width: 100%;
+            background: #4cff88;
+            color: #07130b;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .feature {
+            background: #111720;
+            border: 1px solid #27313d;
+            border-radius: 12px;
+            padding: 16px;
+            min-width: 0;
+        }
+
+        .feature h3 {
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
+
+        .feature p {
+            color: #8994a5;
+            font-size: 12px;
+            line-height: 1.5;
+            margin-bottom: 14px;
+        }
+
+        .feature-status {
+            display: inline-block;
+            color: #ffcf70;
+            background: #302719;
+            padding: 5px 8px;
+            border-radius: 5px;
+            font-size: 10px;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .feature button {
+            width: 100%;
+            background: #202b38;
+            color: white;
+            border: 1px solid #344354;
+            font-size: 12px;
+        }
+
+        .feature button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .settings-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        select {
+            background: #202b38;
+            color: white;
+            border: 1px solid #344354;
+            padding: 10px;
+            border-radius: 8px;
+            max-width: 100%;
+        }
+
+        .log {
+            height: 150px;
+            overflow-y: auto;
+            background: #080b10;
+            border: 1px solid #27313d;
+            border-radius: 8px;
+            padding: 12px;
+            color: #aeb8c6;
+            font-family: monospace;
+            font-size: 12px;
+            line-height: 1.8;
+            overflow-wrap: anywhere;
+        }
+
+        .clear-button {
+            background: #202b38;
+            color: white;
+            font-size: 12px;
+            margin-top: 12px;
+        }
+
+        .notice {
+            color: #8994a5;
+            font-size: 11px;
+            line-height: 1.6;
+            margin-top: 15px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            color: #596575;
+            font-size: 11px;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 14px;
+            }
+
+            .logo {
+                font-size: 24px;
+            }
+
+            .panel {
+                padding: 16px;
+            }
+
+            .grid {
+                gap: 9px;
+            }
+
+            .feature {
+                padding: 12px;
+            }
+
+            .feature h3 {
+                font-size: 13px;
+            }
+
+            .feature p {
+                font-size: 11px;
+            }
+
+            button {
+                padding: 11px 9px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="container">
+
+        <header>
+            <div class="logo">ROBLOX <span>AI</span></div>
+            <p class="subtitle">Your AI gaming companion dashboard</p>
+        </header>
+
+        <section class="panel">
+            <h2 class="panel-title">Assistant Control</h2>
+
+            <div class="status-row">
+                <div class="status-dot" id="statusDot"></div>
+                <span id="statusText">OFFLINE</span>
+            </div>
+
+            <p class="description" id="statusDescription">
+                Your assistant is currently stopped.
+            </p>
+
+            <button class="main-button" id="toggleButton">
+                ▶ TURN ASSISTANT ON
+            </button>
+
+            <p class="notice">
+                Turning this on activates the dashboard interface.
+                The AI services still need a backend connection.
+            </p>
+        </section>
+
+        <h2 class="panel-title">Features</h2>
+
+        <section class="grid">
+
+            <article class="feature">
+                <h3>👤 Accounts</h3>
+                <p>Set up a supported account connection.</p>
+                <span class="feature-status">NOT CONNECTED</span>
+                <button id="accountButton">ACCOUNT SETTINGS</button>
+            </article>
+
+            <article class="feature">
+                <h3>🧠 AI Brain</h3>
+                <p>Configure the AI that powers your companion.</p>
+                <span class="feature-status">NOT CONNECTED</span>
+                <button id="aiButton">AI SETTINGS</button>
+            </article>
+
+            <article class="feature">
+                <h3>🎮 Game Finder</h3>
+                <p>Plan game searches and find Roblox experiences.</p>
+                <span class="feature-status">NOT CONNECTED</span>
+                <button id="gameButton">FIND GAMES</button>
+            </article>
+
+            <article class="feature">
+                <h3>💬 Chat Assistant</h3>
+                <p>Prepare messages and AI-generated replies.</p>
+                <span class="feature-status">NOT CONNECTED</span>
+                <button id="chatButton">OPEN CHAT</button>
+            </article>
+
+        </section>
+
+        <section class="panel" style="margin-top: 20px;">
+            <h2 class="panel-title">AI Personality</h2>
+
+            <div class="settings-row">
+                <span>Choose personality</span>
+
+                <select id="personalitySelect">
+                    <option value="Friendly">Friendly</option>
+                    <option value="Funny">Funny</option>
+                    <option value="Troll">Harmless Troll</option>
+                    <option value="Competitive">Competitive</option>
+                    <option value="Quiet">Quiet</option>
+                </select>
+            </div>
+        </section>
+
+        <section class="panel">
+            <h2 class="panel-title">Activity Log</h2>
+
+            <div class="log" id="activityLog" aria-live="polite"></div>
+
+            <button class="clear-button" id="clearLog">
+                CLEAR LOG
+            </button>
+        </section>
+
+        <footer>
+            ROBLOX AI DASHBOARD · DEVELOPMENT BUILD
+        </footer>
+
+    </main>
+
+    <script src="script.js"></script>
+
+    <script>
+        // Connect the dashboard's feature buttons.
+        document.getElementById("accountButton").addEventListener("click", function () {
+            window.RobloxAIBot.connectAccount();
+        });
+
+        document.getElementById("personalitySelect").addEventListener("change", function () {
+            window.RobloxAIBot.setPersonality(this.value);
+        });
+
+        document.getElementById("aiButton").addEventListener("click", function () {
+            alert("AI Brain setup will be added next.");
+            window.RobloxAIBot.log("AI Brain settings opened.");
+        });
+
+        document.getElementById("gameButton").addEventListener("click", function () {
+            alert("Game Finder will be connected next.");
+            window.RobloxAIBot.log("Game Finder requested.");
+        });
+
+        document.getElementById("chatButton").addEventListener("click", function () {
+            alert("Chat Assistant will be added next.");
+            window.RobloxAIBot.log("Chat Assistant requested.");
+        });
+    </script>
+</body>
+</html>
